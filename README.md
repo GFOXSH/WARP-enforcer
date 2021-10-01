@@ -6,5 +6,10 @@ Lightweight alternative to dxcpl.
 
 Tested on Deltarune.
 
+Before:
+
 ![Before](https://github.com/GFOXSH/WARP-enforcer/raw/main/img/1.png)
+
+After:
+
 ![After](https://github.com/GFOXSH/WARP-enforcer/raw/main/img/2.png)
