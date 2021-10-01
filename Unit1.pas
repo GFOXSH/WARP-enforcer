@@ -68,7 +68,9 @@ end;
 
 procedure TForm1.Button1Click(Sender: TObject);
 var
-fll,flu:Integer;
+config:TextFile;
+fll,res:Integer;
+cfll,flu:Byte;
 name:String;
 begin
 if isactive then
@@ -76,7 +78,10 @@ TerminateProcess(exeinf.hProcess, 0)
 else
 begin
 name:=Edit1.Text;
-case ComboBox1.ItemIndex of
+if name='' then
+exit;
+cfll:=ComboBox1.ItemIndex;
+case cfll of
 0:fll:=0;
 1:fll:=StrToInt('$9100');
 2:fll:=StrToInt('$9200');
@@ -109,12 +114,57 @@ lpFile:=PChar(name);
 nShow:=SW_SHOWNORMAL;
 end;
 ingame.Create(false);
+AssignFile(config, 'config.inf');
+{$I-}
+ReWrite(config);
+{$I+}
+res:=IOResult;
+if res<>0 then
+Exit;
+WriteLn(config, name);
+WriteLn(config, cfll);
+WriteLn(config, flu);
+CloseFile(config);
 end;
 end;
 
 procedure TForm1.FormCreate(Sender: TObject);
+var
+config:TextFile;
+name:String;
+cfll,flu:Byte;
+res:Integer;
 begin
 isactive:=false;
+AssignFile(config, 'config.inf');
+{$I-}
+Reset(config);
+{$I+}
+res:=IOResult;
+if res<>0 then
+Exit;
+name:='';
+cfll:=0;
+flu:=0;
+Try
+ReadLn(config, name);
+ReadLn(config, cfll);
+ReadLn(config, flu);
+Except
+CloseFile(config);
+Exit;
+end;
+CloseFile(config);
+if name <> '' then
+Edit1.Text:=name
+else
+exit;
+if cfll in [0, 1, 2, 3, 4, 5, 6, 7] then
+ComboBox1.ItemIndex:=cfll
+else
+exit;
+if flu = 1 then
+CheckBox1.Checked:=true;
 end;
 
 end.
