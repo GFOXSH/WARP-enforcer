@@ -10,31 +10,72 @@ type
   TForm1 = class(TForm)
     Edit1: TEdit;
     Button1: TButton;
-    Button2: TButton;
-    Button3: TButton;
     ComboBox1: TComboBox;
     CheckBox1: TCheckBox;
     procedure Button1Click(Sender: TObject);
-    procedure Button3Click(Sender: TObject);
-    procedure Button2Click(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
   end;
+  ingame = class(TThread)
+  private
+    procedure Button;
+  protected
+    procedure Execute; override;
+  end;
 
 var
   Form1: TForm1;
+  reg:TRegistry;
+  exeinf: TShellExecuteInfo;
+  isactive:Boolean;
 
 implementation
 
 {$R *.dfm}
 
+procedure ingame.Execute;
+begin
+if ShellExecuteEx(@exeinf) then
+begin
+isactive:=true;
+Synchronize(Button);
+WaitforSingleObject(exeinf.hProcess, INFINITE);
+CloseHandle(exeinf.hProcess);
+end;
+reg:=TRegistry.Create;
+try
+reg.RootKey:=HKEY_CURRENT_USER;
+reg.OpenKey('Software\Microsoft\Direct3D\Application0', true);
+reg.WriteString('D3DBehaviors', 'FeatureLevelLimit=0;ForceWARP=0;DisableFLUpgrade=0');
+reg.WriteString('Name', '');
+finally
+reg.Free;
+end;
+isactive:=false;
+Synchronize(Button);
+end;
+
+procedure ingame.Button;
+begin
+if isactive then
+Form1.Button1.Caption:='Break'
+else
+Form1.Button1.Caption:='Launch';
+end;
+
 procedure TForm1.Button1Click(Sender: TObject);
 var
-reg:TRegistry;
 fll,flu:Integer;
+name:String;
 begin
+if isactive then
+TerminateProcess(exeinf.hProcess, 0)
+else
+begin
+name:=Edit1.Text;
 case ComboBox1.ItemIndex of
 0:fll:=0;
 1:fll:=StrToInt('$9100');
@@ -54,31 +95,26 @@ reg:=TRegistry.Create;
 try
 reg.RootKey:=HKEY_CURRENT_USER;
 reg.OpenKey('Software\Microsoft\Direct3D\Application0', true);
-reg.WriteString('D3DBehaviors', 'FeatureLevelLimit='+inttostr(fll)+';ForceWARP=1;DisableFLUpgrade='+inttostr(flu));
-reg.WriteString('Name', Edit1.Text);
+reg.WriteString('D3DBehaviors', 'FeatureLevelLimit='+IntToStr(fll)+';ForceWARP=1;DisableFLUpgrade='+IntToStr(flu));
+reg.WriteString('Name', name);
 finally
 reg.Free;
 end;
-end;
-
-procedure TForm1.Button3Click(Sender: TObject);
-var
-reg:TRegistry;
+FillChar(exeinf,SizeOf(exeinf), 0);
+with exeinf do
 begin
-reg:=TRegistry.Create;
-try
-reg.RootKey:=HKEY_CURRENT_USER;
-reg.OpenKey('Software\Microsoft\Direct3D\Application0', true);
-reg.WriteString('D3DBehaviors', 'FeatureLevelLimit=0;ForceWARP=0;DisableFLUpgrade=0');
-reg.WriteString('Name', '');
-finally
-reg.Free;
+cbSize:=SizeOf(exeinf);
+fMask:=SEE_MASK_NOCLOSEPROCESS;
+lpFile:=PChar(name);
+nShow:=SW_SHOWNORMAL;
+end;
+ingame.Create(false);
 end;
 end;
 
-procedure TForm1.Button2Click(Sender: TObject);
+procedure TForm1.FormCreate(Sender: TObject);
 begin
-ShellExecute(0, nil, PChar(Edit1.Text), nil, nil, SW_SHOWNORMAL);
+isactive:=false;
 end;
 
 end.

@@ -12,6 +12,7 @@ object Form1: TForm1
   Font.Style = []
   OldCreateOrder = False
   Position = poDesktopCenter
+  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   object Edit1: TEdit
@@ -23,31 +24,13 @@ object Form1: TForm1
     Text = 'DELTARUNE.exe'
   end
   object Button1: TButton
-    Left = 0
+    Left = 72
     Top = 48
     Width = 75
     Height = 25
-    Caption = 'Enable'
+    Caption = 'Launch'
     TabOrder = 1
     OnClick = Button1Click
-  end
-  object Button2: TButton
-    Left = 80
-    Top = 48
-    Width = 75
-    Height = 25
-    Caption = 'Run'
-    TabOrder = 2
-    OnClick = Button2Click
-  end
-  object Button3: TButton
-    Left = 160
-    Top = 48
-    Width = 75
-    Height = 25
-    Caption = 'Disable'
-    TabOrder = 3
-    OnClick = Button3Click
   end
   object ComboBox1: TComboBox
     Left = 168
@@ -57,7 +40,7 @@ object Form1: TForm1
     Style = csDropDownList
     ItemHeight = 13
     ItemIndex = 0
-    TabOrder = 4
+    TabOrder = 2
     Text = 'None'
     Items.Strings = (
       'None'
@@ -75,6 +58,6 @@ object Form1: TForm1
     Width = 233
     Height = 17
     Caption = 'Disable feature level upgrade'
-    TabOrder = 5
+    TabOrder = 3
   end
 end
