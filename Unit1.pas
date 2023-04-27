@@ -113,8 +113,14 @@ end;
 end;
 
 procedure TForm1.FormCreate(Sender: TObject);
+var
+filename:String;
 begin
 isactive:=false;
+filename:=ExtractFileName(Application.ExeName);
+Delete(filename, 1, 1);
+Edit1.Text:=filename;
+
 end;
 
 end.

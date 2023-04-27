@@ -21,7 +21,6 @@ object Form1: TForm1
     Width = 161
     Height = 21
     TabOrder = 0
-    Text = 'DELTARUNE.exe'
   end
   object Button1: TButton
     Left = 72
