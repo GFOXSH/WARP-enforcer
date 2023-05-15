@@ -118,8 +118,27 @@ filename:String;
 begin
 isactive:=false;
 filename:=ExtractFileName(Application.ExeName);
-Delete(filename, 1, 1);
-Edit1.Text:=filename;
+case filename[1] of
+'0':ComboBox1.ItemIndex:=0;
+'1':ComboBox1.ItemIndex:=1;
+'2':ComboBox1.ItemIndex:=2;
+'3':ComboBox1.ItemIndex:=3;
+'4':ComboBox1.ItemIndex:=4;
+'5':ComboBox1.ItemIndex:=5;
+'6':ComboBox1.ItemIndex:=6;
+'7':ComboBox1.ItemIndex:=7;
+'8':ComboBox1.ItemIndex:=0;
+'9':ComboBox1.ItemIndex:=1;
+'A':ComboBox1.ItemIndex:=2;
+'B':ComboBox1.ItemIndex:=3;
+'C':ComboBox1.ItemIndex:=4;
+'D':ComboBox1.ItemIndex:=5;
+'E':ComboBox1.ItemIndex:=6;
+'F':ComboBox1.ItemIndex:=7;
+end;
+if filename[1] in ['8', '9', 'A', 'B', 'C', 'D', 'E', 'F'] then
+CheckBox1.Checked:=true;
+Edit1.Text:=Copy(filename, 2, Length(filename));
 
 end;
 
