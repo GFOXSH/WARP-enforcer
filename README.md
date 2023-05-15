@@ -8,8 +8,8 @@ Tested on Deltarune.
 
 Before:
 
-![Before](https://github.com/GFOXSH/WARP-enforcer/raw/main/img/1.png)
+![Before](https://github.com/GFOXSH/WARP-enforcer/raw/master/img/1.png)
 
 After:
 
-![After](https://github.com/GFOXSH/WARP-enforcer/raw/main/img/2.png)
+![After](https://github.com/GFOXSH/WARP-enforcer/raw/master/img/2.png)
