@@ -1,6 +1,6 @@
 object Form1: TForm1
-  Left = 338
-  Top = 354
+  Left = 0
+  Top = 0
   BorderStyle = bsDialog
   Caption = 'WARP Enforcer'
   ClientHeight = 286
@@ -50,6 +50,7 @@ object Form1: TForm1
       Top = 40
       Width = 169
       Height = 21
+      Style = csDropDownList
       ItemHeight = 13
       ItemIndex = 0
       TabOrder = 1
@@ -93,6 +94,7 @@ object Form1: TForm1
       Top = 40
       Width = 169
       Height = 21
+      Style = csDropDownList
       ItemHeight = 13
       ItemIndex = 3
       TabOrder = 1
