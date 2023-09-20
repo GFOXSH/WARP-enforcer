@@ -3,8 +3,8 @@ object Form1: TForm1
   Top = 0
   BorderStyle = bsDialog
   Caption = 'WARP Enforcer'
-  ClientHeight = 286
-  ClientWidth = 202
+  ClientHeight = 365
+  ClientWidth = 200
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -166,11 +166,36 @@ object Form1: TForm1
   end
   object Button1: TButton
     Left = 8
-    Top = 256
+    Top = 336
     Width = 185
     Height = 25
     Caption = 'Launch'
     TabOrder = 4
     OnClick = Button1Click
+  end
+  object GroupBox3: TGroupBox
+    Left = 8
+    Top = 256
+    Width = 185
+    Height = 73
+    Caption = 'RAM'
+    TabOrder = 5
+    object Button2: TButton
+      Left = 8
+      Top = 16
+      Width = 169
+      Height = 25
+      Caption = 'Clean'
+      TabOrder = 0
+      OnClick = Button2Click
+    end
+    object CheckBox12: TCheckBox
+      Left = 8
+      Top = 48
+      Width = 169
+      Height = 17
+      Caption = 'Deep clean'
+      TabOrder = 1
+    end
   end
 end

@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, Registry, ShellAPI, IniFiles;
+  Dialogs, StdCtrls, Registry, ShellAPI, IniFiles, FlushFileCache;
 
 type
   TForm1 = class(TForm)
@@ -26,8 +26,12 @@ type
     CheckBox10: TCheckBox;
     CheckBox11: TCheckBox;
     Button1: TButton;
+    GroupBox3: TGroupBox;
+    Button2: TButton;
+    CheckBox12: TCheckBox;
     procedure FormCreate(Sender: TObject);
     procedure Button1Click(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
   private
     procedure ConfigRead;
     procedure OnProcessStart;
@@ -75,6 +79,7 @@ begin
   CheckBox9.Checked:=IniFile.ReadBool('CPU', 'Core5', true);
   CheckBox10.Checked:=IniFile.ReadBool('CPU', 'Core6', true);
   CheckBox11.Checked:=IniFile.ReadBool('CPU', 'Core7', true);
+  CheckBox12.Checked:=IniFile.ReadBool('RAM', 'Deep', false);
   IniFile.Free;
 end;
 
@@ -236,6 +241,7 @@ begin
   IniFile.WriteBool('CPU', 'Core5', CheckBox9.Checked);
   IniFile.WriteBool('CPU', 'Core6', CheckBox10.Checked);
   IniFile.WriteBool('CPU', 'Core7', CheckBox11.Checked);
+  IniFile.WriteBool('RAM', 'Deep', CheckBox12.Checked);
   IniFile.Free;
 end;
 
@@ -248,6 +254,11 @@ begin
     OnProcessStart;
     ConfigWrite;
   end;
+end;
+
+procedure TForm1.Button2Click(Sender: TObject);
+begin
+  RAMReduct(CheckBox12.Checked);
 end;
 
 end.
