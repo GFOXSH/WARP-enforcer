@@ -141,7 +141,6 @@ begin
 
     if Full then
     begin
-    ShowMessage('PURGA');
       // Standby list (vista+)
       if SendMemoryCommand(MemoryPurgeStandbyList) < 0 then
         ShowMessage('Failed to purge standby list');
